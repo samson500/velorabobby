@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Velora</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="shortcut icon" href="assets/logo.png">
+    <meta name="theme-color" content="#1a0033">
+
+    <meta name="description" content="Privacy Policy for Velora — how we collect, use, and protect your data.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+
+    <style>
+        :root {
+            --dark:         #0d0018;
+            --purple-deep:  #1a0033;
+            --purple:       #4a0080;
+            --purple-light: #9333ea;
+            --pink:         #ec4899;
+            --gold:         #f59e0b;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100%; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* ── Navbar ── */
+        .navbar { padding: 1rem 0; transition: all 0.3s; }
+        .navbar.scrolled {
+            background-color: rgba(13,0,24,0.96);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(147,51,234,0.2);
+        }
+        .navbar-brand img { height: 44px; }
+        .navbar-nav .nav-link { color: rgba(255,255,255,0.85); font-weight: 500; margin: 0 0.5rem; transition: color 0.2s; font-size: 0.93rem; }
+        .navbar-nav .nav-link:hover { color: var(--purple-light); }
+        .navbar-toggler { border: none; color: rgba(255,255,255,0.8); }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        .navbar-toggler:focus { box-shadow: none; }
+        .navbar-custom.toggled { background-color: rgba(13,0,24,0.96); backdrop-filter: blur(14px); }
+
+        .btn-cta-nav {
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            color: #1a0033; font-weight: 700; border: none; border-radius: 999px;
+            padding: 0.45rem 1.3rem; font-size: 0.88rem; text-decoration: none;
+            display: inline-block; transition: all 0.3s;
+        }
+        .btn-cta-nav:hover { opacity: 0.9; color: #1a0033; }
+
+        /* ── Header ── */
+        .policy-header {
+            padding: 130px 0 60px;
+            background:
+                radial-gradient(ellipse at top left, rgba(107,33,168,0.2), transparent 55%),
+                radial-gradient(ellipse at top right, rgba(236,72,153,0.1), transparent 55%),
+                var(--dark);
+            border-bottom: 1px solid rgba(147,51,234,0.1);
+            text-align: center;
+        }
+
+        .policy-header .label {
+            display: inline-block;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--pink);
+            background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.22);
+            border-radius: 999px; padding: 0.35rem 1rem; margin-bottom: 1rem;
+        }
+
+        .policy-header h1 { font-size: 2.8rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
+        .policy-header h1 span { color: var(--purple-light); }
+        .policy-header p { color: rgba(255,255,255,0.45); font-size: 0.92rem; }
+
+        /* ── Body ── */
+        .policy-body { padding: 5rem 0 6rem; }
+        .policy-content { max-width: 780px; margin: 0 auto; }
+
+        .policy-section {
+            margin-bottom: 3rem; padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .policy-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .policy-section-number {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            font-size: 0.82rem; font-weight: 800; color: #fff; margin-bottom: 1rem;
+        }
+
+        .policy-section h2 { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; }
+
+        .policy-section p { font-size: 0.95rem; color: rgba(255,255,255,0.65); line-height: 1.85; margin-bottom: 0.75rem; }
+        .policy-section p:last-child { margin-bottom: 0; }
+
+        .policy-section ul { list-style: none; padding: 0; margin: 0.5rem 0 0.75rem; }
+        .policy-section ul li {
+            display: flex; align-items: flex-start; gap: 10px;
+            font-size: 0.95rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 0.5rem;
+        }
+        .policy-section ul li i { color: var(--pink); margin-top: 4px; flex-shrink: 0; font-size: 0.75rem; }
+
+        .policy-highlight {
+            background: rgba(147,51,234,0.07);
+            border: 1px solid rgba(147,51,234,0.18);
+            border-radius: 14px; padding: 1.2rem 1.4rem; margin-top: 1rem;
+            font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.75;
+        }
+        .policy-highlight strong { color: var(--purple-light); }
+
+        .policy-email { color: var(--pink); text-decoration: none; font-weight: 600; }
+        .policy-email:hover { text-decoration: underline; color: var(--gold); }
+
+        /* ── TOC ── */
+        .toc-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(147,51,234,0.12);
+            border-radius: 18px; padding: 1.8rem 2rem; margin-bottom: 3rem;
+        }
+        .toc-card h3 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+        .toc-card ol { padding-left: 1.2rem; margin: 0; }
+        .toc-card ol li { margin-bottom: 0.5rem; }
+        .toc-card ol li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .toc-card ol li a:hover { color: var(--purple-light); }
+
+        /* ── Footer ── */
+        #footer { background: #060010; padding: 3rem 0 1.5rem; border-top: 1px solid rgba(147,51,234,0.1); font-size: 0.88rem; color: rgba(255,255,255,0.45); }
+        .footer-logo img { height: 38px; margin-bottom: 0.6rem; }
+        .footer-links h5 { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 0.8rem; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links ul li { margin-bottom: 0.5rem; }
+        .footer-links ul a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; font-size: 0.85rem; }
+        .footer-links ul a:hover { color: var(--purple-light); }
+        .social-links a {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.45); margin-right: 7px; transition: all 0.3s; text-decoration: none;
+        }
+        .social-links a:hover { background: linear-gradient(135deg, var(--pink), var(--gold)); border-color: transparent; color: #1a0033; }
+        .copyright { text-align: center; padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; color: rgba(255,255,255,0.25); }
+        .copyright span { color: var(--purple-light); font-weight: 600; }
+
+        @media (max-width: 991.98px) { .policy-header h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="navbar navbar-custom navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="assets/logo.png" alt="Velora Logo">
+        </a>
+        <div class="d-flex align-items-center d-lg-none">
+            <a href="register.html" class="btn-cta-nav me-2">Join Now</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="index.html#hero-section">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#about-section">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#packages-section">Packages</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#faq-section">FAQ</a></li>
+            </ul>
+        </div>
+        <a href="register.html" class="btn-cta-nav d-none d-lg-inline-block">Join Now</a>
+    </div>
+</nav>
+
+<!-- ── Header ── -->
+<div class="policy-header">
+    <div class="container">
+        <div class="label"><i class="fa-solid fa-shield-halved me-1"></i>Legal</div>
+        <h1>Privacy <span>Policy</span></h1>
+        <p>Last updated: June 21, 2026 &nbsp;·&nbsp; Velora &nbsp;·&nbsp; Federal Republic of Nigeria</p>
+    </div>
+</div>
+
+<!-- ── Body ── -->
+<div class="policy-body">
+    <div class="container">
+        <div class="policy-content">
+
+            <!-- Intro -->
+            <div class="policy-section">
+                <p>
+                    Welcome to Velora. We are committed to protecting your personal information and being transparent about how we handle it. This Privacy Policy explains what data we collect, why we collect it, how it is used, and what rights you have.
+                </p>
+                <p>
+                    By registering on our platform, you agree to the practices described in this policy. If you do not agree, please do not use our services.
+                </p>
+                <div class="policy-highlight">
+                    <strong>Who we are:</strong> Velora is a US fintech brand that empowers members to earn income through AI content creation, Commercial Consortia opportunities, and affiliate marketing. Our platform is accessible at <strong>velora.vercel.app</strong> and via our Android app on Google Play. For privacy-related questions, contact us at <a href="mailto:streamafrica77@gmail.com" class="policy-email">streamafrica77@gmail.com</a>.
+                </div>
+                <div class="policy-highlight mt-3">
+                    <strong>A note about our Android app:</strong> The Velora Android app does not independently collect, store, or process any personal data. All data collection takes place exclusively on our website when users choose to register. The app serves as a companion to the platform — the data practices described in this policy apply to website registration only.
+                </div>
+            </div>
+
+            <!-- TOC -->
+            <div class="toc-card">
+                <h3>Contents</h3>
+                <ol>
+                    <li><a href="#section-1">What Data We Collect</a></li>
+                    <li><a href="#section-2">How We Use Your Data</a></li>
+                    <li><a href="#section-3">Data Sharing</a></li>
+                    <li><a href="#section-4">Data Retention</a></li>
+                    <li><a href="#section-5">Your Rights</a></li>
+                    <li><a href="#section-6">Children's Privacy</a></li>
+                    <li><a href="#section-7">Security</a></li>
+                    <li><a href="#section-8">Updates to This Policy</a></li>
+                    <li><a href="#section-9">Governing Law</a></li>
+                    <li><a href="#section-10">Contact Us</a></li>
+                </ol>
+            </div>
+
+            <!-- 1 -->
+            <div class="policy-section" id="section-1">
+                <div class="policy-section-number">1</div>
+                <h2>What Data We Collect</h2>
+                <p>When you register or use the Velora platform, we collect the following information:</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Full Name</strong> — to identify your account</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Phone Number</strong> — for account communication and verification</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Email Address</strong> — for account creation, login, and updates</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Payment Information</strong> — processed securely through Korapay; we do not store card details directly</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Username</strong> — your chosen display name on the platform</span></li>
+                </ul>
+                <p>We only collect data that is necessary to provide you with our services. We do not collect unnecessary personal information.</p>
+            </div>
+
+            <!-- 2 -->
+            <div class="policy-section" id="section-2">
+                <div class="policy-section-number">2</div>
+                <h2>How We Use Your Data</h2>
+                <p>The information we collect is used strictly for the following purposes:</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle"></i><span>To register and create your Velora account</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>To process your one-time membership activation payment</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>To allocate your membership benefits and income streams</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>To send you important updates about your account or our platform</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>To provide customer support when you contact us</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>To comply with legal obligations where required</span></li>
+                </ul>
+                <p>We do not use your data for advertising, profiling, or any purpose beyond what is listed above.</p>
+            </div>
+
+            <!-- 3 -->
+            <div class="policy-section" id="section-3">
+                <div class="policy-section-number">3</div>
+                <h2>Data Sharing</h2>
+                <p>We do not sell, rent, or trade your personal data to any third party — ever.</p>
+                <p>
+                    The only situation where your data may be shared with a third party is with our payment processor, <strong style="color:#fff">Korapay</strong>, solely for the purpose of completing your membership activation payment. Korapay operates under its own privacy policy and complies with Nigerian financial regulations.
+                </p>
+                <p>We may also disclose your information if required by law or in response to a valid legal request from a Nigerian government authority.</p>
+                <div class="policy-highlight">
+                    <strong>In plain terms:</strong> Your data stays with us and our payment processor. Nobody else sees it, and we will never sell it.
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="policy-section" id="section-4">
+                <div class="policy-section-number">4</div>
+                <h2>Data Retention</h2>
+                <p>We keep your personal data for as long as your Velora membership is active.</p>
+                <p>
+                    If you close your account or request deletion, we will retain your data for up to <strong style="color:#fff">90 days</strong> after account closure, after which it will be permanently deleted from our systems. This period allows us to resolve any outstanding issues or payment queries.
+                </p>
+                <p>Payment transaction records may be kept for longer periods where required by Nigerian financial regulations.</p>
+            </div>
+
+            <!-- 5 -->
+            <div class="policy-section" id="section-5">
+                <div class="policy-section-number">5</div>
+                <h2>Your Rights</h2>
+                <p>As a Velora user, you have the following rights regarding your personal data:</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Right to Access</strong> — request a copy of the data we hold about you</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Right to Correction</strong> — ask us to correct any inaccurate information</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Right to Deletion</strong> — request that we delete your personal data</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span><strong style="color:#fff">Right to Object</strong> — object to how we process your data</span></li>
+                </ul>
+                <p>To exercise any of these rights, email <a href="mailto:streamafrica77@gmail.com" class="policy-email">streamafrica77@gmail.com</a> with the subject line <strong style="color:#fff">"Data Request"</strong>. We will respond within 14 business days.</p>
+                <div class="policy-highlight">
+                    <strong>To delete your account and data:</strong> Email <a href="mailto:streamafrica77@gmail.com" class="policy-email">streamafrica77@gmail.com</a> with the subject "Delete My Account" and include the email linked to your Velora account. Your data will be removed within 90 days.
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="policy-section" id="section-6">
+                <div class="policy-section-number">6</div>
+                <h2>Children's Privacy</h2>
+                <p>Velora is strictly intended for users who are <strong style="color:#fff">18 years of age or older</strong>. Our platform involves financial transactions, which are not appropriate for minors.</p>
+                <p>We do not knowingly collect personal data from anyone under 18. If we become aware that a minor has registered, we will immediately delete their account and all associated data.</p>
+                <p>If you believe a minor has registered on Velora, please contact us immediately at <a href="mailto:streamafrica77@gmail.com" class="policy-email">streamafrica77@gmail.com</a>.</p>
+            </div>
+
+            <!-- 7 -->
+            <div class="policy-section" id="section-7">
+                <div class="policy-section-number">7</div>
+                <h2>Security</h2>
+                <p>We take the security of your personal data seriously:</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle"></i><span>All data transmitted between your device and our platform is <strong style="color:#fff">encrypted in transit</strong> using HTTPS/TLS</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>User data is stored securely in <strong style="color:#fff">Google Firebase</strong>, which uses industry-standard encryption at rest</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>Payment processing is handled entirely by <strong style="color:#fff">Korapay</strong> — we never store your card or bank details on our servers</span></li>
+                    <li><i class="fa-solid fa-circle"></i><span>Access to user data is restricted to authorised personnel only</span></li>
+                </ul>
+                <p>While we take every reasonable measure to protect your data, no system is 100% immune to security risks. Please use a strong, unique password and keep your login credentials private.</p>
+            </div>
+
+            <!-- 8 -->
+            <div class="policy-section" id="section-8">
+                <div class="policy-section-number">8</div>
+                <h2>Updates to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time to reflect changes in our services, technology, or legal requirements.</p>
+                <p>When we make significant changes, we will notify you by email to the address linked to your account. The updated policy will also be published on this page with a new "Last updated" date at the top.</p>
+                <p>Your continued use of Velora after any update means you accept the revised policy.</p>
+            </div>
+
+            <!-- 9 -->
+            <div class="policy-section" id="section-9">
+                <div class="policy-section-number">9</div>
+                <h2>Governing Law</h2>
+                <p>
+                    This Privacy Policy is governed by and shall be interpreted in accordance with the laws of the <strong style="color:#fff">Federal Republic of Nigeria</strong>, including the Nigeria Data Protection Act (NDPA) 2023 and applicable data protection regulations.
+                </p>
+                <p>Any disputes arising from this policy shall be subject to the exclusive jurisdiction of the Nigerian courts.</p>
+            </div>
+
+            <!-- 10 -->
+            <div class="policy-section" id="section-10">
+                <div class="policy-section-number">10</div>
+                <h2>Contact Us</h2>
+                <p>If you have any questions, concerns, or requests regarding this Privacy Policy or how we handle your data, please reach out:</p>
+                <div class="policy-highlight">
+                    <strong>Velora</strong><br>
+                    Email: <a href="mailto:streamafrica77@gmail.com" class="policy-email">streamafrica77@gmail.com</a><br>
+                    Country of Operation: Federal Republic of Nigeria
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── Footer ── -->
+<footer id="footer">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-12">
+                <div class="footer-logo"><img src="assets/logo.png" alt="Velora"></div>
+                <p style="font-size:0.83rem; color:rgba(255,255,255,0.4); margin:0 0 0.8rem;">Learn AI. Create AI. Earn from AI.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-6 footer-links">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about-section">About</a></li>
+                    <li><a href="index.html#packages-section">Packages</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-6 footer-links">
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">Copyright &copy; 2026 <span>Velora</span>. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.querySelector('.navbar-custom');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const collapse = document.querySelector('.navbar-collapse');
+        if (collapse) {
+            collapse.addEventListener('show.bs.collapse', () => navbar.classList.add('toggled'));
+            collapse.addEventListener('hide.bs.collapse', () => navbar.classList.remove('toggled'));
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

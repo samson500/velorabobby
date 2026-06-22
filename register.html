@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Velora AI Academy</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="shortcut icon" href="assets/logo.png">
+    <meta name="theme-color" content="#1a0033">
+
+    <meta name="description" content="Register on Velora AI Academy and start earning from AI video creation, football quizzes, and social media — today.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark:         #0a0015;
+            --purple-deep:  #120025;
+            --purple:       #3d0070;
+            --purple-mid:   #6016b0;
+            --purple-light: #9b4dea;
+            --purple-bright:#b06eff;
+            --pink:         #d946ef;
+            --gold:         #f59e0b;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100%; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(ellipse at top left, rgba(107,33,168,0.2), transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(236,72,153,0.1), transparent 50%),
+                var(--dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* ── Navbar ── */
+        .navbar { padding: 1rem 0; transition: all 0.3s; }
+        .navbar.scrolled {
+            background-color: rgba(13,0,24,0.96);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(147,51,234,0.2);
+        }
+        .navbar-brand img { height: 44px; }
+        .navbar-nav .nav-link { color: rgba(255,255,255,0.85); font-weight: 500; margin: 0 0.5rem; transition: color 0.2s; font-size: 0.93rem; }
+        .navbar-nav .nav-link:hover { color: var(--purple-light); }
+        .navbar-toggler { border: none; color: rgba(255,255,255,0.8); }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        .navbar-toggler:focus { box-shadow: none; }
+        .navbar-custom.toggled { background-color: rgba(13,0,24,0.96); backdrop-filter: blur(14px); }
+
+        .btn-cta-nav {
+            background: linear-gradient(135deg, var(--purple-mid), var(--purple-bright));
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 999px;
+            padding: 0.45rem 1.3rem;
+            font-size: 0.88rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .btn-cta-nav:hover { opacity: 0.9; color: #1a0033; }
+
+        /* ── Register Shell ── */
+        .register-shell { min-height: 100vh; padding: 110px 0 80px; }
+
+        /* ── Register Card ── */
+        .register-card {
+            background: linear-gradient(180deg, rgba(26,0,51,0.97), rgba(13,0,24,0.98));
+            border: 1px solid rgba(147,51,234,0.2);
+            border-radius: 28px;
+            padding: 44px 40px;
+            box-shadow: 0 30px 100px rgba(107,33,168,0.25);
+        }
+
+        .register-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(147,51,234,0.1);
+            border: 1px solid rgba(147,51,234,0.25);
+            color: var(--purple-light);
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .register-logo { width: 88px; margin-bottom: 1rem; }
+
+        .register-card h2 { font-size: 1.9rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; }
+        .register-card h2 span { color: var(--purple-light); }
+
+        .register-copy { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.8rem; }
+
+        /* ── Form ── */
+        .form-label { color: #f0f0f0; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px; }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+            padding: 13px 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.93rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control::placeholder { color: rgba(255,255,255,0.3); }
+        .form-control:focus, .form-select:focus {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            border-color: rgba(147,51,234,0.55);
+            box-shadow: 0 0 0 3px rgba(147,51,234,0.12);
+        }
+
+        /* ── Plan Selector ── */
+        .plan-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid rgba(147,51,234,0.15);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .plan-option:hover { border-color: rgba(147,51,234,0.4); background: rgba(147,51,234,0.07); }
+        .plan-option.selected { border-color: var(--purple-light); background: rgba(147,51,234,0.12); }
+
+        .plan-name { font-weight: 700; font-size: 0.95rem; }
+        .plan-price {
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .plan-check {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid rgba(147,51,234,0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; color: transparent; flex-shrink: 0;
+            margin-top: 4px;
+        }
+        .plan-option.selected .plan-check { background: var(--purple-light); border-color: var(--purple-light); color: #fff; }
+
+        /* ── Submit ── */
+        .btn-register {
+            width: 100%; padding: 15px; border-radius: 999px; border: none;
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            color: #1a0033; font-family: 'Poppins', sans-serif;
+            font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.3s;
+        }
+        .btn-register:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(236,72,153,0.4); }
+        .btn-register:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* ── Note ── */
+        .register-note {
+            margin-top: 1.5rem; padding: 16px 18px; border-radius: 14px;
+            background: rgba(147,51,234,0.06); border: 1px solid rgba(147,51,234,0.18);
+            color: rgba(255,255,255,0.65); font-size: 0.88rem; line-height: 1.6;
+        }
+        .register-note strong { color: var(--purple-light); }
+
+        /* ── Info Panel ── */
+        .register-info-panel { padding: 2rem; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+        .register-info-panel h3 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 1.2rem; line-height: 1.25; }
+        .register-info-panel h3 span { color: var(--purple-light); }
+
+        .info-feature { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.4rem; }
+        .info-feature-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            background: rgba(147,51,234,0.12); border: 1px solid rgba(147,51,234,0.22);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--purple-light); font-size: 1.1rem; flex-shrink: 0;
+        }
+        .info-feature-text strong { display: block; color: #fff; font-size: 0.95rem; margin-bottom: 3px; }
+        .info-feature-text span { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        .info-stat-row { display: flex; gap: 1rem; margin-top: 2rem; }
+        .info-stat { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1rem; text-align: center; }
+        .info-stat-value { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, var(--pink), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .info-stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+
+        .pay-error { color: #ff6b6b; font-size: 0.84rem; margin-top: 0.5rem; text-align: center; }
+
+        /* ── Footer ── */
+        #footer { background: #060010; padding: 3rem 0 1.5rem; border-top: 1px solid rgba(147,51,234,0.1); font-size: 0.88rem; color: rgba(255,255,255,0.45); }
+        .footer-logo img { height: 38px; margin-bottom: 0.6rem; }
+        .footer-links h5 { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 0.8rem; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links ul li { margin-bottom: 0.5rem; }
+        .footer-links ul a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+        .footer-links ul a:hover { color: var(--purple-light); }
+        .social-links a {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.45); margin-right: 7px;
+            transition: all 0.3s; text-decoration: none;
+        }
+        .social-links a:hover { background: linear-gradient(135deg, var(--pink), var(--gold)); border-color: transparent; color: #1a0033; }
+        .copyright { text-align: center; padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; color: rgba(255,255,255,0.25); }
+        .copyright span { color: var(--purple-light); font-weight: 600; }
+
+        @media (max-width: 991.98px) { .register-info-panel { display: none; } .register-card { padding: 30px 24px; } }
+        @media (max-width: 575px) { .register-shell { padding: 95px 0 60px; } .register-card h2 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="navbar navbar-custom navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="assets/logo.png" alt="Velora Logo">
+        </a>
+        <div class="d-flex align-items-center d-lg-none">
+            <a href="register.html" class="btn-cta-nav me-2">Join Now</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="index.html#hero-section">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#about-section">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#how-section">How It Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#packages-section">Packages</a></li>
+            </ul>
+        </div>
+        <a href="register.html" class="btn-cta-nav d-none d-lg-inline-block">Join Now</a>
+    </div>
+</nav>
+
+<!-- ── Register Shell ── -->
+<main class="register-shell">
+    <div class="container">
+        <div class="row justify-content-center align-items-center g-4">
+
+            <!-- Info Panel (desktop only) -->
+            <div class="col-lg-5 d-none d-lg-block" data-aos="fade-right">
+                <div class="register-info-panel">
+                    <h3>Join the <span>Velora Network</span> & Start Earning Today</h3>
+                    <p style="color:rgba(255,255,255,0.55); font-size:0.92rem; line-height:1.75; margin-bottom:2rem;">
+                        Register, choose your package, complete your one-time activation, and unlock AI video creation, football rewards, social earnings, and more.
+                    </p>
+
+                    <div class="info-feature">
+                        <div class="info-feature-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="info-feature-text">
+                            <strong>Instant Access</strong>
+                            <span>Your account is activated immediately after payment confirmation.</span>
+                        </div>
+                    </div>
+                    <div class="info-feature">
+                        <div class="info-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="info-feature-text">
+                            <strong>Secure Payments</strong>
+                            <span>Payments processed via Korapay — Nigeria's trusted payment gateway.</span>
+                        </div>
+                    </div>
+                    <div class="info-feature">
+                        <div class="info-feature-icon"><i class="fa-solid fa-brain"></i></div>
+                        <div class="info-feature-text">
+                            <strong>10-Minute AI Lessons</strong>
+                            <span>Start creating professional AI videos from day one — no experience needed.</span>
+                        </div>
+                    </div>
+                    <div class="info-feature">
+                        <div class="info-feature-icon"><i class="fa-solid fa-headset"></i></div>
+                        <div class="info-feature-text">
+                            <strong>Dedicated Support</strong>
+                            <span>Our team is ready to support you on Telegram after you register.</span>
+                        </div>
+                    </div>
+
+                    <div class="info-stat-row">
+                        <div class="info-stat">
+                            <div class="info-stat-value">50K+</div>
+                            <div class="info-stat-label">Members</div>
+                        </div>
+                        <div class="info-stat">
+                            <div class="info-stat-value">$10</div>
+                            <div class="info-stat-label">Per Video</div>
+                        </div>
+                        <div class="info-stat">
+                            <div class="info-stat-value">3</div>
+                            <div class="info-stat-label">Streams</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Card -->
+            <div class="col-lg-6 col-md-8 col-12" data-aos="fade-left">
+                <div class="register-card">
+                    <div class="register-badge">
+                        <i class="fa-solid fa-circle" style="font-size:0.5rem; color:var(--pink);"></i>
+                        Account activated on payment
+                    </div>
+
+                    <img src="assets/logo.png" alt="Velora Logo" class="register-logo">
+
+                    <h2>Create Your <span>Velora Account</span></h2>
+                    <p class="register-copy">Fill in your details, choose your package, complete your one-time activation, and start earning.</p>
+
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Choose a username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="080XXXXXXXX" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Select Package</label>
+
+                            <div class="plan-option" id="planPlatinum" onclick="selectPlan('Velora Platinum', 9000, this)">
+                                <div>
+                                    <div class="plan-name">Velora Platinum</div>
+                                    <div style="font-size:0.78rem; color:rgba(255,255,255,0.45);">YouTube ₦20K · AI Rewards · Quiz Bonuses</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div class="plan-price">₦9,000</div>
+                                    <div class="plan-check" id="checkPlatinum"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
+
+                            <div class="plan-option" id="planGold" onclick="selectPlan('Velora Gold', 14500, this)">
+                                <div>
+                                    <div class="plan-name">Velora Gold <span style="font-size:0.7rem; background:linear-gradient(135deg,var(--pink),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;">POPULAR</span></div>
+                                    <div style="font-size:0.78rem; color:rgba(255,255,255,0.45);">YouTube ₦40K · Higher Cashback · All Features</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div class="plan-price">₦14,500</div>
+                                    <div class="plan-check" id="checkGold"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="selectedPlan" value="">
+                            <input type="hidden" id="selectedAmount" value="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter a strong password" required>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn-register" id="registerBtn">
+                                <i class="fa-solid fa-lock me-2"></i>Pay &amp; Activate Account
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="register-note">
+                        <strong>What happens next?</strong> After payment, you'll be redirected to our Telegram group where an admin will verify your payment and onboard you into the Velora community.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer id="footer">
+    <div class="container">
+        <div class="row gy-3 align-items-center">
+            <div class="col-lg-4 col-md-12">
+                <div class="footer-logo"><img src="assets/logo.png" alt="Velora"></div>
+                <p style="font-size:0.83rem; color:rgba(255,255,255,0.4); margin:0;">Learn AI. Create AI. Earn from AI.</p>
+                <div class="social-links mt-2">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-6 footer-links">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about-section">About</a></li>
+                    <li><a href="index.html#packages-section">Packages</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-6 footer-links">
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">Copyright &copy; 2026 <span>Velora</span>. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<!-- Firebase SDK -->
+<script type="module">
+    import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, serverTimestamp }
+                              from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getAnalytics }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+    const firebaseConfig = {
+        apiKey:            "AIzaSyDrnmtx0LkfMKytzTKQZwXCg1JKZXiJmtU",
+        authDomain:        "glamour-28049.firebaseapp.com",
+        projectId:         "glamour-28049",
+        storageBucket:     "glamour-28049.firebasestorage.app",
+        messagingSenderId: "22177815395",
+        appId:             "1:22177815395:web:2ca7caa2b1626299675156"
+    };
+
+    const TEST_MODE         = false;
+    const KORA_PUBLIC_KEY   = "pk_live_BVFqyauoDX8rXa5GhotV8snxf1HfpsCPMnRos3h8";
+    const TELEGRAM_FALLBACK = "https://t.me/velora_official?text=Hello%2C%20Admin!%20%F0%9F%9A%80%0A%0AI%20have%20just%20made%20my%20payment%20for%20VELORA%20AI%20Academy%20Registration.%20%0A%0APlease%20confirm%20my%20payment";
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app, "(default)");
+    getAnalytics(app);
+
+    const form      = document.getElementById("registerForm");
+    const submitBtn = document.getElementById("registerBtn");
+
+    let telegramLink = TELEGRAM_FALLBACK;
+    async function loadTelegramLink() {
+        try {
+            const snap = await getDoc(doc(db, "account", "velorabobby"));
+            if (snap.exists() && snap.data().telegramLink) {
+                telegramLink = snap.data().telegramLink;
+            }
+        } catch (_) {}
+    }
+    loadTelegramLink();
+
+    function setBtn(label, disabled = false) {
+        submitBtn.innerHTML = label;
+        submitBtn.disabled  = disabled;
+    }
+
+    function getKoraSafeText(text) {
+        return text.replace(/[^a-zA-Z0-9 .,_-]/g, "").trim();
+    }
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const fullName  = document.getElementById("fullName").value.trim();
+        const username  = document.getElementById("username").value.trim();
+        const email     = document.getElementById("email").value.trim().toLowerCase();
+        const phone     = document.getElementById("phone").value.trim();
+        const planName  = document.getElementById("selectedPlan").value;
+        const amount    = Number(document.getElementById("selectedAmount").value);
+        const reference = `VLR-${Date.now()}-${Math.random().toString(36).slice(2,7).toUpperCase()}`;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!fullName || !username || !email || !phone) {
+            alert("Please fill in all fields before proceeding.");
+            return;
+        }
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+        if (!planName || !amount) {
+            alert("Please select a package before proceeding.");
+            return;
+        }
+
+        setBtn('<i class="fa-solid fa-spinner fa-spin me-2"></i>Opening payment…', true);
+
+        const koraOptions = {
+            key:       KORA_PUBLIC_KEY,
+            reference,
+            amount,
+            currency:  "NGN",
+            customer:  { name: fullName, email },
+            narration: getKoraSafeText(`Velora AI Academy ${planName} Activation`),
+
+            onSuccess: async (data) => {
+                setBtn('<i class="fa-solid fa-spinner fa-spin me-2"></i>Saving your account…', true);
+
+                if (!TEST_MODE) {
+                    try {
+                        await setDoc(doc(db, "velorausers", email), {
+                            fullName,
+                            username,
+                            email,
+                            phone,
+                            planName,
+                            activationAmount: String(amount),
+                            activated:        true,
+                            koraReference:    data.reference || reference,
+                            joinedAt:         serverTimestamp()
+                        });
+                    } catch (_) {}
+                }
+
+                setBtn('<i class="fa-solid fa-check me-2"></i>Payment Successful!', true);
+                setTimeout(() => { window.location.href = telegramLink; }, 800);
+            },
+
+            onClose: () => {
+                setBtn('<i class="fa-solid fa-lock me-2"></i>Pay &amp; Activate Account', false);
+            },
+
+            onFailed: (data) => {
+                console.error("Korapay failed:", data);
+                setBtn('<i class="fa-solid fa-lock me-2"></i>Pay &amp; Activate Account', false);
+                const existing = document.getElementById("payErrMsg");
+                if (existing) existing.remove();
+                const err = document.createElement("p");
+                err.id = "payErrMsg";
+                err.className = "pay-error";
+                err.textContent = "Payment failed. Please try again.";
+                submitBtn.parentElement.appendChild(err);
+                setTimeout(() => err.remove(), 4000);
+            }
+        };
+
+        const notificationUrl = window.location.protocol === "https:"
+            ? `${window.location.origin}/api/kora-webhook`
+            : null;
+        if (notificationUrl) koraOptions.notification_url = notificationUrl;
+
+        launchKoraPayment(koraOptions);
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"></script>
+
+<script>
+    function selectPlan(name, amount, el) {
+        document.querySelectorAll('.plan-option').forEach(p => p.classList.remove('selected'));
+        el.classList.add('selected');
+        document.getElementById("selectedPlan").value   = name;
+        document.getElementById("selectedAmount").value = amount;
+    }
+
+    function launchKoraPayment(opts) {
+        window.Korapay.initialize(opts);
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        AOS.init({ duration: 800, once: true });
+
+        const navbar = document.querySelector('.navbar-custom');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const collapse = document.querySelector('.navbar-collapse');
+        if (collapse) {
+            collapse.addEventListener('show.bs.collapse', () => navbar.classList.add('toggled'));
+            collapse.addEventListener('hide.bs.collapse', () => navbar.classList.remove('toggled'));
+        }
+    });
+
+    window.addEventListener('beforeinstallprompt', (e) => e.preventDefault());
+</script>
+
+</body>
+</html>

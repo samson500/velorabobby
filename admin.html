@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Velora</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="shortcut icon" href="assets/logo.png">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+
+    <style>
+        :root {
+            --dark:         #0d0018;
+            --purple-deep:  #1a0033;
+            --purple:       #4a0080;
+            --purple-mid:   #6b21a8;
+            --purple-light: #9333ea;
+            --pink:         #ec4899;
+            --gold:         #f59e0b;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100%; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* ── Login Overlay ── */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at top, rgba(107,33,168,0.3), transparent 60%), var(--dark);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: linear-gradient(160deg, rgba(26,0,51,0.98), rgba(13,0,24,0.99));
+            border: 1px solid rgba(147,51,234,0.25);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 30px 80px rgba(107,33,168,0.3);
+            text-align: center;
+        }
+
+        .login-card img { height: 56px; margin-bottom: 1rem; }
+        .login-card h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .login-card h2 span { color: var(--purple-light); }
+        .login-card p { color: rgba(255,255,255,0.5); font-size: 0.88rem; margin-bottom: 1.8rem; }
+
+        .login-input {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(147,51,234,0.25);
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--purple-light); }
+        .login-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            color: #1a0033;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 0.97rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .login-error { color: #ff6b6b; font-size: 0.83rem; margin-top: 0.6rem; }
+
+        /* ── Dashboard ── */
+        #dashboard { display: none; }
+
+        .admin-navbar {
+            background: rgba(13,0,24,0.95);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(147,51,234,0.15);
+            padding: 1rem 0;
+        }
+
+        .admin-navbar img { height: 38px; }
+
+        .admin-badge {
+            background: rgba(147,51,234,0.15);
+            border: 1px solid rgba(147,51,234,0.3);
+            color: var(--purple-light);
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.6);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-logout:hover { background: rgba(255,0,0,0.1); border-color: rgba(255,0,0,0.3); color: #ff6b6b; }
+
+        .admin-body { padding: 2.5rem 0 4rem; }
+
+        /* ── Stat Cards ── */
+        .stat-card {
+            background: linear-gradient(145deg, rgba(74,0,128,0.2), rgba(13,0,24,0.6));
+            border: 1px solid rgba(147,51,234,0.18);
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple-light), var(--pink));
+            border-radius: 20px 20px 0 0;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            opacity: 0.1;
+        }
+
+        /* ── Telegram Editor ── */
+        .config-card {
+            background: rgba(26,0,51,0.6);
+            border: 1px solid rgba(147,51,234,0.18);
+            border-radius: 20px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .config-card h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .config-card h5 i { color: var(--purple-light); }
+
+        .config-input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(147,51,234,0.2);
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .config-input:focus { border-color: var(--purple-light); }
+        .config-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--purple-light), var(--pink));
+            border: none;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 22px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-save:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .save-msg { font-size: 0.82rem; margin-left: 0.8rem; }
+        .save-msg.success { color: #4ade80; }
+        .save-msg.error   { color: #ff6b6b; }
+
+        /* ── Table ── */
+        .table-card {
+            background: rgba(26,0,51,0.5);
+            border: 1px solid rgba(147,51,234,0.15);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .table-card-header {
+            padding: 1.4rem 1.8rem;
+            border-bottom: 1px solid rgba(147,51,234,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .table-card-header h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-card-header h5 i { color: var(--purple-light); }
+
+        .btn-refresh {
+            background: rgba(147,51,234,0.12);
+            border: 1px solid rgba(147,51,234,0.25);
+            color: var(--purple-light);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-refresh:hover { background: rgba(147,51,234,0.22); }
+
+        .table-responsive { padding: 0; }
+
+        table.velora-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .velora-table thead th {
+            background: rgba(74,0,128,0.3);
+            color: rgba(255,255,255,0.55);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(147,51,234,0.15);
+            white-space: nowrap;
+        }
+
+        .velora-table tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.8);
+            vertical-align: middle;
+        }
+
+        .velora-table tbody tr:last-child td { border-bottom: none; }
+        .velora-table tbody tr:hover td { background: rgba(147,51,234,0.07); }
+
+        .plan-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .plan-pill.platinum {
+            background: rgba(226,232,240,0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(226,232,240,0.2);
+        }
+
+        .plan-pill.gold {
+            background: rgba(245,158,11,0.1);
+            color: var(--gold);
+            border: 1px solid rgba(245,158,11,0.25);
+        }
+
+        .ref-code {
+            font-family: monospace;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.9rem;
+        }
+
+        .empty-state i { font-size: 2rem; margin-bottom: 0.8rem; display: block; opacity: 0.3; }
+
+        .loading-row td {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.88rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Login Overlay ── -->
+<div id="loginOverlay">
+    <div class="login-card">
+        <img src="assets/logo.png" alt="Velora">
+        <h2>Admin <span>Dashboard</span></h2>
+        <p>Enter your password to access the Velora admin panel.</p>
+        <input type="password" id="loginPassword" class="login-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()">
+        <button class="login-btn" onclick="doLogin()">
+            <i class="fa-solid fa-unlock me-2"></i>Login
+        </button>
+        <div class="login-error" id="loginError" style="display:none;">Incorrect password. Try again.</div>
+    </div>
+</div>
+
+<!-- ── Dashboard ── -->
+<div id="dashboard">
+
+    <!-- Navbar -->
+    <nav class="admin-navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <img src="assets/logo.png" alt="Velora">
+                <span class="admin-badge"><i class="fa-solid fa-shield-halved me-1"></i>Admin</span>
+            </div>
+            <button class="btn-logout" onclick="doLogout()">
+                <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="admin-body">
+        <div class="container">
+
+            <!-- Stats -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Transactions</div>
+                        <div class="stat-value" id="statTransactions">—</div>
+                        <i class="fa-solid fa-receipt stat-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Funds Collected</div>
+                        <div class="stat-value" id="statFunds">—</div>
+                        <i class="fa-solid fa-naira-sign stat-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-label">Average per User</div>
+                        <div class="stat-value" id="statAvg">—</div>
+                        <i class="fa-solid fa-chart-line stat-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Telegram Link Editor -->
+            <div class="config-card">
+                <h5><i class="fa-brands fa-telegram"></i> Telegram Redirect Link</h5>
+                <div class="d-flex gap-2 align-items-center flex-wrap">
+                    <input type="url" class="config-input" id="telegramInput" placeholder="https://t.me/your_group_link" style="flex:1; min-width:220px;">
+                    <button class="btn-save" onclick="saveTelegramLink()">
+                        <i class="fa-solid fa-floppy-disk me-1"></i>Save
+                    </button>
+                    <span class="save-msg" id="saveMsg"></span>
+                </div>
+                <div style="font-size:0.78rem; color:rgba(255,255,255,0.35); margin-top:0.6rem;">
+                    This is the link users are redirected to after successful payment.
+                </div>
+            </div>
+
+            <!-- Transactions Table -->
+            <div class="table-card">
+                <div class="table-card-header">
+                    <h5><i class="fa-solid fa-users"></i> Registered Users</h5>
+                    <button class="btn-refresh" onclick="loadUsers()">
+                        <i class="fa-solid fa-rotate-right me-1"></i>Refresh
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="velora-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Package</th>
+                                <th>Amount</th>
+                                <th>Reference</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr class="loading-row"><td colspan="8"><i class="fa-solid fa-spinner fa-spin me-2"></i>Loading…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+    import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc, setDoc }
+                              from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey:            "AIzaSyDrnmtx0LkfMKytzTKQZwXCg1JKZXiJmtU",
+        authDomain:        "glamour-28049.firebaseapp.com",
+        projectId:         "glamour-28049",
+        storageBucket:     "glamour-28049.firebasestorage.app",
+        messagingSenderId: "22177815395",
+        appId:             "1:22177815395:web:2ca7caa2b1626299675156"
+    };
+
+    const ADMIN_PASSWORD = "bobbymania";
+    const app  = initializeApp(firebaseConfig);
+    const db   = getFirestore(app, "(default)");
+    const CONFIG_DOC = doc(db, "account", "velorabobby");
+
+    window.doLogin = function () {
+        const pwd = document.getElementById("loginPassword").value;
+        if (pwd === ADMIN_PASSWORD) {
+            sessionStorage.setItem("velora_admin", "1");
+            document.getElementById("loginOverlay").style.display = "none";
+            document.getElementById("dashboard").style.display    = "block";
+            loadConfig();
+            loadUsers();
+        } else {
+            document.getElementById("loginError").style.display = "block";
+        }
+    };
+
+    window.doLogout = function () {
+        sessionStorage.removeItem("velora_admin");
+        location.reload();
+    };
+
+    if (sessionStorage.getItem("velora_admin") === "1") {
+        document.getElementById("loginOverlay").style.display = "none";
+        document.getElementById("dashboard").style.display    = "block";
+        loadConfig();
+        loadUsers();
+    }
+
+    async function loadConfig() {
+        try {
+            const snap = await getDoc(CONFIG_DOC);
+            if (snap.exists() && snap.data().telegramLink) {
+                document.getElementById("telegramInput").value = snap.data().telegramLink;
+            }
+        } catch (_) {}
+    }
+
+    window.saveTelegramLink = async function () {
+        const link = document.getElementById("telegramInput").value.trim();
+        const msg  = document.getElementById("saveMsg");
+        if (!link) { msg.textContent = "Please enter a link."; msg.className = "save-msg error"; return; }
+        try {
+            await setDoc(CONFIG_DOC, { telegramLink: link }, { merge: true });
+            msg.textContent = "Saved!";
+            msg.className   = "save-msg success";
+        } catch (e) {
+            msg.textContent = "Error saving.";
+            msg.className   = "save-msg error";
+        }
+        setTimeout(() => { msg.textContent = ""; }, 3000);
+    };
+
+    window.loadUsers = async function () {
+        const tbody = document.getElementById("usersTableBody");
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="8"><i class="fa-solid fa-spinner fa-spin me-2"></i>Loading…</td></tr>';
+
+        try {
+            const snap = await getDocs(collection(db, "velorausers"));
+
+            if (snap.empty) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fa-solid fa-inbox"></i>No users yet.</div></td></tr>';
+                document.getElementById("statTransactions").textContent = "0";
+                document.getElementById("statFunds").textContent        = "₦0";
+                document.getElementById("statAvg").textContent          = "₦0";
+                return;
+            }
+
+            let totalFunds = 0;
+            let rows = "";
+            let i = 1;
+
+            snap.forEach(d => {
+                const u       = d.data();
+                const amount  = Number(u.activationAmount) || 0;
+                totalFunds   += amount;
+                const date    = u.joinedAt ? new Date(u.joinedAt.seconds * 1000).toLocaleDateString("en-NG") : "—";
+                const planClass = (u.planName || "").toLowerCase().includes("gold") ? "gold" : "platinum";
+
+                rows += `<tr>
+                    <td style="color:rgba(255,255,255,0.4);">${i++}</td>
+                    <td><strong>${u.fullName || "—"}</strong></td>
+                    <td style="color:rgba(255,255,255,0.6);">${u.email || "—"}</td>
+                    <td>${u.phone || "—"}</td>
+                    <td><span class="plan-pill ${planClass}">${u.planName || "—"}</span></td>
+                    <td style="color:var(--gold); font-weight:700;">₦${Number(amount).toLocaleString()}</td>
+                    <td><span class="ref-code">${u.koraReference || "—"}</span></td>
+                    <td style="color:rgba(255,255,255,0.5);">${date}</td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = rows;
+            const count = snap.size;
+            document.getElementById("statTransactions").textContent = count;
+            document.getElementById("statFunds").textContent        = "₦" + totalFunds.toLocaleString();
+            document.getElementById("statAvg").textContent          = "₦" + Math.round(totalFunds / count).toLocaleString();
+
+        } catch (e) {
+            console.error("loadUsers error:", e);
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:#ff6b6b;">Error loading users: ${e.message}</td></tr>`;
+        }
+    };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
