@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment - Velora AI Academy</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="shortcut icon" href="assets/logo.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #e8eaed;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .topbar-brand img { height: 34px; }
+
+        .topbar-brand span {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #6016b0;
+        }
+
+        .topbar-secure {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .topbar-secure i { color: #6016b0; font-size: 0.8rem; }
+
+        .page-wrap {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem 1rem 3rem;
+        }
+
+        .payment-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 460px;
+            overflow: hidden;
+        }
+
+        .card-header-strip {
+            background: linear-gradient(135deg, #3d0070, #6016b0);
+            padding: 1.5rem 1.8rem 1.3rem;
+            color: #fff;
+        }
+
+        .merchant-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .merchant-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .merchant-logo img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .merchant-info .merchant-name {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .merchant-info .merchant-sub {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .amount-display {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .amount-display .currency {
+            font-size: 1.1rem;
+            font-weight: 600;
+            vertical-align: super;
+            margin-right: 2px;
+        }
+
+        .amount-label {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.2rem;
+        }
+
+        .card-body-inner { padding: 1.6rem 1.8rem; }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #9ca3af;
+            margin-bottom: 0.65rem;
+        }
+
+        .account-box {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.1rem 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .account-bank-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .bank-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: #fff;
+            border: 1.5px solid #ede9fe;
+            border-radius: 8px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .bank-badge i { color: #6016b0; font-size: 0.85rem; }
+
+        .account-number-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .account-number {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+
+        .copy-btn {
+            background: #6016b0;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover { background: #9b4dea; }
+        .copy-btn.copied { background: #059669; }
+
+        .account-name {
+            font-size: 0.72rem;
+            color: #6b7280;
+            margin-top: 0.4rem;
+        }
+
+        .instructions {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .instructions-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 0.45rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .instructions ol { padding-left: 1.1rem; margin: 0; }
+        .instructions ol li { font-size: 0.75rem; color: #78350f; line-height: 1.6; }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1rem;
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            border-radius: 10px;
+            margin-bottom: 1.2rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #9b4dea;
+            flex-shrink: 0;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.5; transform: scale(0.85); }
+        }
+
+        .status-text { font-size: 0.78rem; color: #5b21b6; font-weight: 500; }
+
+        .customer-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.78rem;
+        }
+
+        .customer-row:last-child { border-bottom: none; }
+        .customer-row .label { color: #9ca3af; }
+        .customer-row .value { color: #111827; font-weight: 500; }
+
+        .trust-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            padding: 1rem 1.8rem;
+            border-top: 1px solid #f3f4f6;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.68rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .trust-badge i { font-size: 0.75rem; color: #6016b0; }
+
+        .page-footer {
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+
+        .page-footer a { color: #6b7280; text-decoration: none; }
+
+        /* Loading */
+        .loading-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.8rem;
+            text-align: center;
+        }
+
+        .spinner-ring {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #6016b0;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-size: 0.85rem; color: #6b7280; }
+
+        /* Error */
+        .error-body {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1.8rem;
+            text-align: center;
+        }
+
+        .error-body.show { display: flex; }
+
+        .error-icon {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: #fef2f2;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .error-icon i { font-size: 1.6rem; color: #ef4444; }
+        .error-title { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.35rem; }
+        .error-sub { font-size: 0.78rem; color: #6b7280; margin-bottom: 1.2rem; }
+
+        .btn-back {
+            background: linear-gradient(135deg, #3d0070, #6016b0);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.65rem 1.5rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Confirmed */
+        .confirmed-overlay {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1.8rem;
+            text-align: center;
+        }
+
+        .confirmed-overlay.show { display: flex; }
+
+        .confirmed-icon {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: #f3e8ff;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .confirmed-icon i { font-size: 2rem; color: #6016b0; }
+
+        .confirmed-title { font-size: 1.3rem; font-weight: 700; color: #111827; margin-bottom: 0.4rem; }
+        .confirmed-sub { font-size: 0.82rem; color: #6b7280; margin-bottom: 1.5rem; }
+
+        .redirect-bar {
+            width: 100%; max-width: 260px;
+            height: 4px; background: #e5e7eb;
+            border-radius: 2px; overflow: hidden;
+        }
+
+        .redirect-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3d0070, #9b4dea);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 1.5s linear;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-brand">
+        <img src="assets/logo.png" alt="Velora AI Academy">
+        <span>Velora AI Academy</span>
+    </div>
+    <div class="topbar-secure">
+        <i class="fa-solid fa-lock"></i>
+        Secured payment
+    </div>
+</div>
+
+<div class="page-wrap">
+    <div class="payment-card" id="paymentCard">
+
+        <!-- Loading -->
+        <div class="loading-body" id="loadingBody">
+            <div class="spinner-ring"></div>
+            <p class="loading-text">Setting up your payment account…</p>
+        </div>
+
+        <!-- Error -->
+        <div class="error-body" id="errorBody">
+            <div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <p class="error-title">Payment setup failed</p>
+            <p class="error-sub" id="errorMsg">Something went wrong. Please go back and try again.</p>
+            <a href="register.html" class="btn-back">
+                <i class="fa-solid fa-arrow-left me-1"></i> Go Back
+            </a>
+        </div>
+
+        <!-- Payment content -->
+        <div id="paymentContent" style="display:none;">
+
+            <div class="card-header-strip">
+                <div class="merchant-row">
+                    <div class="merchant-logo">
+                        <img src="assets/logo.png" alt="Velora">
+                    </div>
+                    <div class="merchant-info">
+                        <div class="merchant-name">Velora AI Academy</div>
+                        <div class="merchant-sub">Account Activation</div>
+                    </div>
+                </div>
+                <div class="amount-display">
+                    <span class="currency">&#8358;</span><span id="displayAmount">0</span>
+                </div>
+                <div class="amount-label">One-time activation fee</div>
+            </div>
+
+            <div class="card-body-inner">
+
+                <div class="status-row">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Waiting for your transfer…</span>
+                </div>
+
+                <div class="section-label">Transfer to this account</div>
+                <div class="account-box">
+                    <div class="account-bank-row">
+                        <div class="bank-badge">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <span id="bankName">Paga</span>
+                        </div>
+                        <span style="font-size:0.7rem;color:#9ca3af;">Virtual account</span>
+                    </div>
+                    <div class="account-number-row">
+                        <div class="account-number" id="accountNumber">—</div>
+                        <button class="copy-btn" id="copyBtn" onclick="copyAccount()">
+                            <i class="fa-regular fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <div class="account-name" id="accountName"></div>
+                </div>
+
+                <div class="instructions">
+                    <div class="instructions-title">
+                        <i class="fa-solid fa-circle-info"></i>
+                        How to pay
+                    </div>
+                    <ol>
+                        <li>Open your banking app or USSD</li>
+                        <li>Transfer the exact amount shown above</li>
+                        <li>Use the account number above as the recipient</li>
+                        <li>Stay on this page — activation is automatic</li>
+                    </ol>
+                </div>
+
+                <div class="section-label">Your details</div>
+                <div style="margin-bottom:1.2rem;">
+                    <div class="customer-row">
+                        <span class="label">Name</span>
+                        <span class="value" id="detailName">—</span>
+                    </div>
+                    <div class="customer-row">
+                        <span class="label">Email</span>
+                        <span class="value" id="detailEmail">—</span>
+                    </div>
+                    <div class="customer-row">
+                        <span class="label">Package</span>
+                        <span class="value" id="detailPlan">—</span>
+                    </div>
+                    <div class="customer-row">
+                        <span class="label">Reference</span>
+                        <span class="value" id="detailRef" style="font-size:0.68rem;"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="trust-row">
+                <div class="trust-badge"><i class="fa-solid fa-lock"></i> SSL Secured</div>
+                <div class="trust-badge"><i class="fa-solid fa-shield-halved"></i> 256-bit Encryption</div>
+                <div class="trust-badge"><i class="fa-solid fa-circle-check"></i> Verified Merchant</div>
+            </div>
+
+        </div>
+
+        <!-- Confirmed -->
+        <div class="confirmed-overlay" id="confirmedOverlay">
+            <div class="confirmed-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="confirmed-title">Payment Confirmed!</div>
+            <div class="confirmed-sub">Your Velora account is now active. Redirecting you to your community…</div>
+            <div class="redirect-bar">
+                <div class="redirect-progress" id="redirectProgress"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="page-footer">
+    Powered by <strong>Aspfiy</strong> &nbsp;|&nbsp;
+    <a href="privacy-policy.html">Privacy Policy</a> &nbsp;|&nbsp;
+    &copy; 2025 Velora AI Academy
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs }
+        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey:            "AIzaSyDrnmtx0LkfMKytzTKQZwXCg1JKZXiJmtU",
+        authDomain:        "glamour-28049.firebaseapp.com",
+        projectId:         "glamour-28049",
+        storageBucket:     "glamour-28049.firebasestorage.app",
+        messagingSenderId: "22177815395",
+        appId:             "1:22177815395:web:2ca7caa2b1626299675156"
+    };
+
+    const TELEGRAM_FALLBACK = "https://t.me/velora_official?text=Hello%2C%20Admin!%20I%20have%20just%20made%20my%20payment%20for%20Velora%20Registration.%20Please%20confirm%20my%20payment.";
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app, "(default)");
+
+    let telegramLink = TELEGRAM_FALLBACK;
+    let pollInterval = null;
+
+    function showError(msg) {
+        document.getElementById("loadingBody").style.display   = "none";
+        document.getElementById("paymentContent").style.display = "none";
+        document.getElementById("errorMsg").textContent = msg || "Something went wrong. Please go back and try again.";
+        document.getElementById("errorBody").classList.add("show");
+    }
+
+    function showConfirmed() {
+        document.getElementById("paymentContent").style.display = "none";
+        const overlay = document.getElementById("confirmedOverlay");
+        overlay.classList.add("show");
+        setTimeout(() => { document.getElementById("redirectProgress").style.width = "100%"; }, 100);
+        setTimeout(() => { window.location.href = telegramLink; }, 2000);
+    }
+
+    function pollForActivation(reference) {
+        let attempts = 0;
+        pollInterval = setInterval(async () => {
+            attempts++;
+            try {
+                const q = query(
+                    collection(db, "velorausers"),
+                    where("aspfiyReference", "==", reference)
+                );
+                const result = await getDocs(q);
+                if (!result.empty && result.docs[0].data().activated) {
+                    clearInterval(pollInterval);
+                    showConfirmed();
+                }
+            } catch (_) {}
+            if (attempts >= 100) clearInterval(pollInterval);
+        }, 6000);
+    }
+
+    async function init() {
+        const raw = sessionStorage.getItem("vlr_payment");
+        if (!raw) { showError("No payment session found. Please register again."); return; }
+
+        let session;
+        try { session = JSON.parse(raw); } catch (_) {
+            showError("Invalid payment session. Please register again."); return;
+        }
+
+        const { reference, accountNumber, bankName, accountName, amount, fullName, email, planName } = session;
+
+        if (!accountNumber || !reference) {
+            showError("Payment account details missing. Please register again."); return;
+        }
+
+        try {
+            const snap = await getDoc(doc(db, "account", "velorabobby"));
+            if (snap.exists() && snap.data().telegramLink) {
+                telegramLink = snap.data().telegramLink;
+            }
+        } catch (_) {}
+
+        document.getElementById("displayAmount").textContent = Number(amount).toLocaleString();
+        document.getElementById("accountNumber").textContent = accountNumber;
+        document.getElementById("bankName").textContent      = bankName || "Paga";
+        document.getElementById("accountName").textContent   = accountName || "";
+        document.getElementById("detailName").textContent    = fullName || "";
+        document.getElementById("detailEmail").textContent   = email || "";
+        document.getElementById("detailPlan").textContent    = planName || "";
+        document.getElementById("detailRef").textContent     = reference || "";
+
+        window._vlrAccountNumber = accountNumber;
+
+        document.getElementById("loadingBody").style.display    = "none";
+        document.getElementById("paymentContent").style.display = "block";
+
+        pollForActivation(reference);
+    }
+
+    init();
+</script>
+
+<script>
+    function copyAccount() {
+        const num = window._vlrAccountNumber || document.getElementById("accountNumber").textContent;
+        const btn = document.getElementById("copyBtn");
+        navigator.clipboard.writeText(num).then(() => {
+            btn.classList.add("copied");
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+            setTimeout(() => {
+                btn.classList.remove("copied");
+                btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+            }, 2500);
+        });
+    }
+</script>
+
+</body>
+</html>
