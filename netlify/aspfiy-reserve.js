@@ -1,22 +1,22 @@
-export default async (req, context) => {
-    if (req.method !== "POST") {
-        return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405 });
+exports.handler = async function (event, context) {
+    if (event.httpMethod !== "POST") {
+        return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
     }
 
     let body;
-    try { body = await req.json(); } catch (_) {
-        return new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 });
+    try { body = JSON.parse(event.body || "{}"); } catch (_) {
+        return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON" }) };
     }
 
-    const { reference, firstName, lastName, email, phone, webhookUrl } = body || {};
+    const { reference, firstName, lastName, email, phone, webhookUrl } = body;
 
     if (!reference || !firstName || !email || !phone) {
-        return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
+        return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
     }
 
-    const secret = Netlify.env.get("ASPFIY_SECRET_KEY");
+    const secret = process.env.ASPFIY_SECRET_KEY;
     if (!secret) {
-        return new Response(JSON.stringify({ error: "Payment provider not configured" }), { status: 500 });
+        return { statusCode: 500, body: JSON.stringify({ error: "Payment provider not configured" }) };
     }
 
     try {
@@ -39,17 +39,12 @@ export default async (req, context) => {
         const data = await response.json();
 
         if (!response.ok) {
-            return new Response(JSON.stringify({ error: data?.message || "Failed to create payment account" }), { status: 502 });
+            return { statusCode: 502, body: JSON.stringify({ error: data?.message || "Failed to create payment account" }) };
         }
 
-        return new Response(JSON.stringify(data), {
-            status: 200,
-            headers: { "Content-Type": "application/json" }
-        });
+        return { statusCode: 200, body: JSON.stringify(data) };
     } catch (err) {
         console.error("Aspfiy reserve error:", err);
-        return new Response(JSON.stringify({ error: "Payment provider unavailable" }), { status: 500 });
+        return { statusCode: 500, body: JSON.stringify({ error: "Payment provider unavailable" }) };
     }
 };
-
-export const config = { path: "/.netlify/functions/aspfiy-reserve" };
