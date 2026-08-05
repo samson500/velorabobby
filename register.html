@@ -430,7 +430,7 @@
 <!-- Firebase SDK -->
 <script type="module">
     import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, doc, setDoc, serverTimestamp }
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { getAnalytics }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 
@@ -466,10 +466,20 @@
         setTimeout(() => err.remove(), 6000);
     }
 
-    const PAYSTACK_LINKS = {
-        9000:  "https://paystack.shop/pay/h4wto57fqu",
-        14500: "https://paystack.shop/pay/4daj1lwd7z"
-    };
+    // Payment links are managed from admin.html and stored in Firestore.
+    // paymentLink1 → ₦9,000 package, paymentLink2 → ₦14,500 package.
+    const PAYMENT_LINKS = { 9000: "", 14500: "" };
+
+    const paymentLinksReady = (async function loadPaymentLinks() {
+        try {
+            const snap = await getDoc(doc(db, "account", "velorabobby"));
+            if (snap.exists()) {
+                const data = snap.data();
+                if (data.paymentLink1) PAYMENT_LINKS[9000]  = data.paymentLink1;
+                if (data.paymentLink2) PAYMENT_LINKS[14500] = data.paymentLink2;
+            }
+        } catch (_) {}
+    })();
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -498,9 +508,13 @@
             return;
         }
 
-        const payLink = PAYSTACK_LINKS[amount];
+        setBtn('<i class="fa-solid fa-spinner fa-spin me-2"></i>Preparing payment…', true);
+        await paymentLinksReady;
+
+        const payLink = PAYMENT_LINKS[amount];
         if (!payLink) {
-            showError("Selected package is not available. Please choose a package.");
+            setBtn('<i class="fa-solid fa-lock me-2"></i>Pay &amp; Activate Account', false);
+            showError("Payment link not configured yet. Please contact support.");
             return;
         }
 

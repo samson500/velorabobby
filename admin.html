@@ -423,6 +423,37 @@
                 </div>
             </div>
 
+            <!-- Payment Link Editor -->
+            <div class="config-card">
+                <h5><i class="fa-solid fa-link"></i> Payment Link Settings</h5>
+
+                <div style="margin-bottom:1.2rem;">
+                    <div style="font-size:0.82rem; font-weight:600; color:rgba(255,255,255,0.7); margin-bottom:0.5rem;">₦9,000 Package (Velora Platinum)</div>
+                    <div class="d-flex gap-2 align-items-center flex-wrap">
+                        <input type="url" class="config-input" id="paymentLink1Input" placeholder="https://paystack.shop/pay/xxxxxxxx" style="flex:1; min-width:220px;">
+                        <button class="btn-save" onclick="savePaymentLink('1')">
+                            <i class="fa-solid fa-floppy-disk me-1"></i>Save
+                        </button>
+                        <span class="save-msg" id="saveMsg1"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-size:0.82rem; font-weight:600; color:rgba(255,255,255,0.7); margin-bottom:0.5rem;">₦14,500 Package (Velora Gold)</div>
+                    <div class="d-flex gap-2 align-items-center flex-wrap">
+                        <input type="url" class="config-input" id="paymentLink2Input" placeholder="https://paystack.shop/pay/xxxxxxxx" style="flex:1; min-width:220px;">
+                        <button class="btn-save" onclick="savePaymentLink('2')">
+                            <i class="fa-solid fa-floppy-disk me-1"></i>Save
+                        </button>
+                        <span class="save-msg" id="saveMsg2"></span>
+                    </div>
+                </div>
+
+                <div style="font-size:0.78rem; color:rgba(255,255,255,0.35); margin-top:0.9rem;">
+                    Users are redirected here on the registration page after they submit their details for each package.
+                </div>
+            </div>
+
             <!-- Transactions Table -->
             <div class="table-card">
                 <div class="table-card-header">
@@ -504,9 +535,11 @@
     async function loadConfig() {
         try {
             const snap = await getDoc(CONFIG_DOC);
-            if (snap.exists() && snap.data().telegramLink) {
-                document.getElementById("telegramInput").value = snap.data().telegramLink;
-            }
+            if (!snap.exists()) return;
+            const data = snap.data();
+            if (data.telegramLink)  document.getElementById("telegramInput").value  = data.telegramLink;
+            if (data.paymentLink1)  document.getElementById("paymentLink1Input").value = data.paymentLink1;
+            if (data.paymentLink2)  document.getElementById("paymentLink2Input").value = data.paymentLink2;
         } catch (_) {}
     }
 
@@ -516,6 +549,32 @@
         if (!link) { msg.textContent = "Please enter a link."; msg.className = "save-msg error"; return; }
         try {
             await setDoc(CONFIG_DOC, { telegramLink: link }, { merge: true });
+            msg.textContent = "Saved!";
+            msg.className   = "save-msg success";
+        } catch (e) {
+            msg.textContent = "Error saving.";
+            msg.className   = "save-msg error";
+        }
+        setTimeout(() => { msg.textContent = ""; }, 3000);
+    };
+
+    window.savePaymentLink = async function (which) {
+        const inputId = which === "1" ? "paymentLink1Input" : "paymentLink2Input";
+        const field   = which === "1" ? "paymentLink1"      : "paymentLink2";
+        const msgId   = which === "1" ? "saveMsg1"          : "saveMsg2";
+
+        const link = document.getElementById(inputId).value.trim();
+        const msg  = document.getElementById(msgId);
+
+        if (!link || !link.startsWith("http")) {
+            msg.textContent = "Enter a valid URL.";
+            msg.className   = "save-msg error";
+            setTimeout(() => { msg.textContent = ""; }, 3000);
+            return;
+        }
+
+        try {
+            await setDoc(CONFIG_DOC, { [field]: link }, { merge: true });
             msg.textContent = "Saved!";
             msg.className   = "save-msg success";
         } catch (e) {
